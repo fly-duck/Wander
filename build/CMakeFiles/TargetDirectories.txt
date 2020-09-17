@@ -1,3 +1,0 @@
-/home/minfeng/Navigation/build/CMakeFiles/edit_cache.dir
-/home/minfeng/Navigation/build/CMakeFiles/rebuild_cache.dir
-/home/minfeng/Navigation/build/CMakeFiles/Point.dir
