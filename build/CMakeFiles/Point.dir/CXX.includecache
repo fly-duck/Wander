@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/point.h
+algorithm
+-
+
+../include/status.h
+
+/home/minfeng/Navigation/src/main.cpp
+point.h
+-
+iostream
+-
+status.h
+-
+

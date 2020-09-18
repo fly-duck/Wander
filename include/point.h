@@ -23,6 +23,12 @@ public:
     {
         return point_[D];
     }
+   
+    template<std::size_t D>
+    const DataType& SetPoint(const DataType& data) 
+    {
+       point_[D]= data;
+    }
 
 private:
     
