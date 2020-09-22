@@ -2,6 +2,8 @@
 #include <iostream>
 #include <random>
 #include <status.h>
+//#include <new_features.h> 
+#include <template/toy.hpp>
 
 int main()
 {
@@ -10,8 +12,9 @@ int main()
 
     p.SetPoint<1>(2);
     std::cout<<p.GetPoint<1>()<<"\n";
-    
+   
 
+    std::cout<< Wander::copyable<Wander::Robot<int>>  <<"\n";
     Wander::Status<int> i;
 
     return 0;

@@ -4,6 +4,8 @@
 # $ cmake --version
 cmake_minimum_required(VERSION 3.5)
 
+
+set (CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Set the project name
 project (Point)
@@ -19,6 +21,6 @@ add_executable(Point ${SOURCES})
 # Set the directories that should be included in the build command for this target
 # when running g++ these will be included as -I/directory/path/
 target_include_directories(Point
-    PRIVATE 
+    PRIVATE
         ${PROJECT_SOURCE_DIR}/include
 )
