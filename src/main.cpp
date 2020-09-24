@@ -5,6 +5,12 @@
 //#include <new_features.h> 
 #include <template/toy.hpp>
 
+
+using namespace Wander;
+using EarthMan = Human<int>;
+using MarsMan  = Human<double> ;
+using MoonMan  = Human<long double>;
+
 int main()
 {
     Wander::Point<int, 3> p;
@@ -16,6 +22,13 @@ int main()
 
     std::cout<< Wander::copyable<Wander::Robot<int>>  <<"\n";
     Wander::Status<int> i;
+
+    std::cout<< "Template :" << "==<<\n";
+
+    EarthMan em;
+    MarsMan  mm;
+    MoonMan  mom;
+    PrintHumansize<EarthMan,MarsMan, MoonMan>(em,mm,mom);
 
     return 0;
 }
