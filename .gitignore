@@ -1,4 +1,5 @@
 
 .clangd
 build
+cuda_build
 compile_commands.json
