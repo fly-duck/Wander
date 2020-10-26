@@ -19,6 +19,7 @@ set(SOURCES
 add_executable(Point ${SOURCES})
 
 add_executable(Arrow category/world_is_a_arrow.cc)
+add_executable(Memory memory/allocater.cc)
 # Set the directories that should be included in the build command for this target
 # when running g++ these will be included as -I/directory/path/
 target_include_directories(Point

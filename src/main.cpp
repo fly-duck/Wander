@@ -41,5 +41,11 @@ int main()
 
     std::cout<< IsSame(em,mm)<<"\n";
     std::cout<< IsSame(em,em2)<<"\n";
+    
+    int* fw_obj= new int(122);
+    Perfect_ForWarding(fw_obj);
+    std::cout<< *fw_obj<<"\n";
+   
+    Print_Traits( 12312312312.23f);
     return 0;
 }

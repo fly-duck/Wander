@@ -54,4 +54,34 @@ namespace Wander{
     {
         print(c[Idx]...);
     }
+
+    template <typename T> 
+    void Perfect_ForWarding(T && val){
+        std::cout<< *val <<"\n";
+    }
+    template<typename T>
+    void Perfect_ForWarding(T & val) {
+        std::cout<< "const & val" << val <<"\n";
+    }
+
+
+    template<typename T>
+    struct PrintTraits;
+
+    template<>
+    struct PrintTraits<float>{
+        using P_Traits= unsigned int;
+    };
+
+
+
+    // printtraits change float value behaviour to be unsigned int vlaue behaviour 
+    // which equal to cast float to an unsigned int 
+    template<typename T>
+    auto Print_Traits(const T& val){
+        using P_Traits= typename PrintTraits<T>::P_Traits;
+        P_Traits total = val;
+        std::cout << total << "\n";
+        //return total;
+    }
 }

@@ -7,7 +7,28 @@
 
 namespace Wander{
 
-    class Map;
+
+
+    class Box{
+    
+        public:
+
+
+        private:
+
+            unsigned int box_unit_;
+            std::pair<unsigned int, unsigned int> ll_ , ur_;
+
+        
+        
+    };
+    class Map
+    {
+        template<typename T>
+        Map();
+
+
+    };
 
     class Point;
 
