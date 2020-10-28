@@ -5,7 +5,8 @@
 //#include <new_features.h> 
 #include <template/toy.hpp>
 #include <vector>
-
+#include <template/traits.hpp>
+#include <threads/thread_pool.hpp>
 using namespace Wander;
 using EarthMan = Human<int>;
 using MarsMan  = Human<double> ;
@@ -46,6 +47,6 @@ int main()
     Perfect_ForWarding(fw_obj);
     std::cout<< *fw_obj<<"\n";
    
-    Print_Traits( 12312312312.23f);
+    Print_Traits( long(12312312312.23f));
     return 0;
 }

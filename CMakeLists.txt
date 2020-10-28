@@ -4,12 +4,14 @@
 # $ cmake --version
 cmake_minimum_required(VERSION 3.5)
 
-
+set(CMAKE_BUILD_TYPE Debug)
 set (CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Set the project name
 project (Point)
 
+find_package(Boost 1.67 REQUIRED regex date_time system filesystem thread graph)
+include_directories(${BOOST_INCLUDE_DIRS})
 # Create a sources variable with a link to all cpp files to compile
 set(SOURCES
     src/main.cpp
@@ -26,3 +28,7 @@ target_include_directories(Point
     PRIVATE
         ${PROJECT_SOURCE_DIR}/include
 )
+target_link_libraries(Point ${Boost_LIBRARIES})
+
+message("boost lib: ${Boost_LIBRARIES}")
+message("boost inc:${Boost_INCLUDE_DIR}")
