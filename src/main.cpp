@@ -7,6 +7,11 @@
 #include <vector>
 #include <template/traits.hpp>
 #include <threads/thread_pool.hpp>
+#include <test/test.h>
+#include <threads/threadsafe_datastructure.hpp>
+
+
+
 using namespace Wander;
 using EarthMan = Human<int>;
 using MarsMan  = Human<double> ;
@@ -48,5 +53,52 @@ int main()
     std::cout<< *fw_obj<<"\n";
    
     Print_Traits( long(12312312312.23f));
+    
+
+    Stack<int,false> stack_a(Wander::StackFill(100));
+   
+    std::stack<int> no_threadsafe_stack=Wander::StackFill(100);
+    Concurent_Printer printer;
+
+   std::thread thread1([&stack_a,&printer]{ 
+   for(int i=0; i<100; ++i){
+       printer.Print_Stack<Wander::Stack<int,false>>(stack_a);}});
+
+   std::thread thread2([&stack_a,&printer]{ 
+   for(int i=0; i<100; ++i){
+       printer.Print_Stack<Wander::Stack<int,false>>(stack_a);}});
+   
+   thread1.join();
+   thread2.join();
+   
+    
+    std::cout<< " thread safe complete " << "\n";
+    
+
+    //std::thread thread3([&no_threadsafe_stack]{ 
+    //for(int i=0; i<100; ++i){
+    //    Wander::Print_Stack<d::stack<int>>(no_threadsafe_stack);}});
+ 
+    //std::thread thread4([&no_threadsafe_stack]{ 
+    //for(int i=0; i<100; ++i){
+    //    //std::this_thread::sleep_for(std::chrono::seconds(1));
+    //    Wander::Print_Stack<std::stack<int>>(no_threadsafe_stack);}});
+    //
+ 
+//    std::thread thread3([&no_threadsafe_stack,&printer]{ 
+//    for(int i=0; i<100; ++i){
+//        printer.Print_Stack<std::stack<int>>(no_threadsafe_stack);}});
+// 
+//    std::thread thread4([&no_threadsafe_stack,&printer]{ 
+//    for(int i=0; i<100; ++i){
+//        //std::this_thread::sleep_for(std::chrono::seconds(1));
+//        printer.Print_Stack<std::stack<int>>(no_threadsafe_stack);}});
+//    thread3.join();
+//    thread4.join();
+//
+
+    
+    // need to complete in main thread
+    std::cout<< "done!" <<"\n"; 
     return 0;
 }

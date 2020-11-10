@@ -1,3 +1,4 @@
+#pragma once 
 #include <boost/asio/detail/config.hpp>
 #include <boost/asio/detail/noncopyable.hpp>
 #include <boost/asio.hpp>

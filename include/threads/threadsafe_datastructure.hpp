@@ -4,6 +4,9 @@
 #include <exception>
 #include <string>
 #include <mutex>
+#include <memory>
+#include <thread>
+
 
 namespace Wander{
     struct StackException :public std::exception {
@@ -18,6 +21,52 @@ namespace Wander{
         std::stack<T> stack_;
     public:
         Stack(){};
-        Stack(const Stack& other) {} 
-    };
+
+        Stack& operator= (const Stack& other) =delete;
+
+        Stack(const std::stack<T>& other){
+            std::lock_guard<std::mutex> lock(stack_mutex_);
+            stack_=other;
+        }
+        Stack(const Stack& other) {
+            std::lock_guard<std::mutex> lock(stack_mutex_);
+            stack_=other.stack_;
+        }
+
+        std::shared_ptr<T> pop(){
+            std::lock_guard<std::mutex> lock(stack_mutex_);
+            if(stack_.empty()) return nullptr; //throw StackException();
+            auto res(std::make_shared<T>(std::move(stack_.top())));
+            stack_.pop();
+            return res;
+        };
+        
+        void push(const T& value ){
+            std::lock_guard<std::mutex> lock(stack_mutex_);
+            stack_.push(value);
+        }
+
+        T top(){
+            std::lock_guard<std::mutex> lock(stack_mutex_);
+            return  stack_.top();
+        }
+        
+        bool empty(){
+            std::lock_guard<std::mutex> lock(stack_mutex_);
+            return stack_.empty();
+        }
+
+    
+     };
+
+    std::stack<int> StackFill(const int& nums){
+        std::stack<int> results;
+        for(size_t i=0; i<nums; ++i)
+        {
+            results.push(i);
+        };
+        return results;
+    }
+        
+
 }
