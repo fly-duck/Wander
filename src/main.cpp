@@ -60,13 +60,22 @@ int main()
     std::stack<int> no_threadsafe_stack=Wander::StackFill(100);
     Concurent_Printer printer;
 
-   std::thread thread1([&stack_a,&printer]{ 
-   for(int i=0; i<100; ++i){
-       printer.Print_Stack<Wander::Stack<int,false>>(stack_a);}});
 
-   std::thread thread2([&stack_a,&printer]{ 
+   std::promise<bool> b1,b2;
+   auto future1 = b1.get_future();
+   auto future2 = b2.get_future();
+
+   std::thread thread1([&stack_a,&printer,&b1]{ 
    for(int i=0; i<100; ++i){
-       printer.Print_Stack<Wander::Stack<int,false>>(stack_a);}});
+       printer.Print_Stack<Wander::Stack<int,false>>(stack_a);} 
+       b1.set_value(true);
+       });
+
+   std::thread thread2([&stack_a,&printer,&b2]{ 
+   for(int i=0; i<100; ++i){
+       printer.Print_Stack<Wander::Stack<int,false>>(stack_a);}
+       b2.set_value(true);
+       });
    
    thread1.join();
    thread2.join();
@@ -83,19 +92,22 @@ int main()
     //for(int i=0; i<100; ++i){
     //    //std::this_thread::sleep_for(std::chrono::seconds(1));
     //    Wander::Print_Stack<std::stack<int>>(no_threadsafe_stack);}});
-    //
+   using namespace std::chrono_literals; 
+    if(future1.wait_for(0ms)==std::future_status::ready && future2.wait_for(0ms) == std::future_status::ready)
+    {
+    std::thread thread3([&no_threadsafe_stack,&printer]{ 
+    for(int i=0; i<100; ++i){
+        printer.Print_Stack<std::stack<int>>(no_threadsafe_stack);}});
  
-//    std::thread thread3([&no_threadsafe_stack,&printer]{ 
-//    for(int i=0; i<100; ++i){
-//        printer.Print_Stack<std::stack<int>>(no_threadsafe_stack);}});
-// 
-//    std::thread thread4([&no_threadsafe_stack,&printer]{ 
-//    for(int i=0; i<100; ++i){
-//        //std::this_thread::sleep_for(std::chrono::seconds(1));
-//        printer.Print_Stack<std::stack<int>>(no_threadsafe_stack);}});
-//    thread3.join();
-//    thread4.join();
-//
+    std::thread thread4([&no_threadsafe_stack,&printer]{ 
+    for(int i=0; i<100; ++i){
+        //std::this_thread::sleep_for(std::chrono::seconds(1));
+        printer.Print_Stack<std::stack<int>>(no_threadsafe_stack);}});
+  
+    
+    thread3.join();
+    thread4.join();
+    }
 
     
     // need to complete in main thread
