@@ -9,7 +9,7 @@
 #include <threads/thread_pool.hpp>
 #include <test/test.h>
 #include <threads/threadsafe_datastructure.hpp>
-
+#include <test/notype_template_test.hpp>
 
 
 using namespace Wander;
@@ -93,7 +93,7 @@ int main()
     //    //std::this_thread::sleep_for(std::chrono::seconds(1));
     //    Wander::Print_Stack<std::stack<int>>(no_threadsafe_stack);}});
    using namespace std::chrono_literals; 
-    if(future1.wait_for(0ms)==std::future_status::ready && future2.wait_for(0ms) == std::future_status::ready)
+    if(0&&future1.wait_for(0ms)==std::future_status::ready && future2.wait_for(0ms) == std::future_status::ready)
     {
     std::thread thread3([&no_threadsafe_stack,&printer]{ 
     for(int i=0; i<100; ++i){
@@ -109,8 +109,14 @@ int main()
     thread4.join();
     }
 
-    
+    Test test; 
+
+    test.run_test();
     // need to complete in main thread
     std::cout<< "done!" <<"\n"; 
+
+
+        
+
     return 0;
 }
