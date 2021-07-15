@@ -10,6 +10,8 @@
 #include <test/test.h>
 #include <threads/threadsafe_datastructure.hpp>
 #include <test/notype_template_test.hpp>
+// need to solve this
+#include <../algorithm_lib/kdtree.hpp>
 
 
 using namespace Wander;
@@ -17,6 +19,7 @@ using EarthMan = Human<int>;
 using MarsMan  = Human<double> ;
 using MoonMan  = Human<long double>;
 using V_EHuman = std::vector<EarthMan>;
+using namespace std::chrono_literals; 
 int main()
 {
     Wander::Point<int, 3> p;
@@ -92,7 +95,6 @@ int main()
     //for(int i=0; i<100; ++i){
     //    //std::this_thread::sleep_for(std::chrono::seconds(1));
     //    Wander::Print_Stack<std::stack<int>>(no_threadsafe_stack);}});
-   using namespace std::chrono_literals; 
     if(0&&future1.wait_for(0ms)==std::future_status::ready && future2.wait_for(0ms) == std::future_status::ready)
     {
     std::thread thread3([&no_threadsafe_stack,&printer]{ 
@@ -114,6 +116,11 @@ int main()
     test.run_test();
     // need to complete in main thread
     std::cout<< "done!" <<"\n"; 
+
+
+    ThreadPool pool;
+    //std::function<void(const ThreadPool&)> thread_fun = &ThreadPool::accumulate;
+    //pool.summit(&ThreadPool::accumulate);
 
 
         

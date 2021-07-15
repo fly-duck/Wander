@@ -27,6 +27,7 @@ add_executable(Memory memory/allocater.cc)
 target_include_directories(Sandbox
     PRIVATE
         ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/algorithm_lib
 )
 target_link_libraries(Sandbox ${Boost_LIBRARIES})
 

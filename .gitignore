@@ -3,3 +3,4 @@ note.md
 build
 cuda_build
 compile_commands.json
+.vscode
