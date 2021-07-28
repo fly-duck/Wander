@@ -1,4 +1,6 @@
+#pragma once
 #include <deque>
+#include <vector>
 
 
 namespace Wander{
@@ -44,6 +46,27 @@ namespace Wander{
 
     template<typename T , SpecialType<T>> 
     void foo5 () {}
+
+    template<auto n> 
+    class AutoTemplate{
+    };
    
+    template<auto ...> class PackTemplate{};
+
+    //name of template is optional 
+    template<typename> class OptionalName{};
+    template<typename ...> class OptionalPackName{};
+
+
+    template<typename T> 
+    class MyContainer{};
+
+    template<typename K, typename V, template<typename> typename C /* = MyContainer */ >
+    class Map { 
+        C<K> keys;
+        C<V> values;
+    };
+
+    Map<int,int,std::vector> map;
 
 }

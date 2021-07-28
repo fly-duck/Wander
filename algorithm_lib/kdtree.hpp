@@ -117,6 +117,10 @@ namespace Wander
             const KeyTwo root_keys = root_->GetKeys();
         }
 
+        void TreeDump() {
+            return ;
+        }
+
         NodePointer Compare(std::unique_ptr<TreeNode2D>& p, std::unique_ptr<TreeNode2D>& q, unsigned int disc)
         {
             if (p->GetKeys() == q->GetKeys())

@@ -24,6 +24,9 @@ int main()
 {
     Wander::Point<int, 3> p;
     std::cout<<p.GetPoint<1>()<<"\n";
+    Test test; 
+
+    test.run_test();
 
     p.SetPoint<1>(2);
     std::cout<<p.GetPoint<1>()<<"\n";
@@ -111,9 +114,6 @@ int main()
     thread4.join();
     }
 
-    Test test; 
-
-    test.run_test();
     // need to complete in main thread
     std::cout<< "done!" <<"\n"; 
 

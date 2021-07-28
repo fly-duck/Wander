@@ -2,7 +2,6 @@
 
 #include <algorithm> 
 
-
 namespace Wander{
 
 template<typename DataType , std::size_t Dimension>

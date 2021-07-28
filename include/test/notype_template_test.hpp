@@ -1,6 +1,7 @@
 #pragma once
 #include <template/nontype_template.hpp>
 #include <template/perfect_forwarding.hpp>
+#include <template/template_template_parameter.hpp>
 #include <iostream>
 
 namespace Wander {
@@ -13,6 +14,8 @@ namespace Wander {
 
             //int i;
             //C<(i)> c;
+            AutoTemplate<'a'> template_a;
+            OptionalName<int> kkk;
             int *p = new int(2);
             //std::cout<< foo<p>()<< "\n";
             std::cout<< general_add<30, int>(20)<<"\n";
