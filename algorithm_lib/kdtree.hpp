@@ -56,12 +56,6 @@ namespace Wander
             return *this;
         }
 
-        //   template <typename T>
-        //   T GetKey(NodePointer &node)
-        //   {
-        //       //keys must be represented in node
-        //   }
-
         KeyTwo GetKeys() const
         {
             return keys_;

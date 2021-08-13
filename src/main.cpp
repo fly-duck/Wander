@@ -22,6 +22,7 @@ using V_EHuman = std::vector<EarthMan>;
 using namespace std::chrono_literals; 
 int main()
 {
+    /*
     Wander::Point<int, 3> p;
     std::cout<<p.GetPoint<1>()<<"\n";
     Test test; 
@@ -122,6 +123,10 @@ int main()
     //std::function<void(const ThreadPool&)> thread_fun = &ThreadPool::accumulate;
     //pool.summit(&ThreadPool::accumulate);
 
+
+    */
+    Wander::Point<int,2> point;
+    point.SetValue<2>(3);
 
         
 

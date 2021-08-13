@@ -3,6 +3,7 @@
 #include <template/perfect_forwarding.hpp>
 #include <template/template_template_parameter.hpp>
 #include <iostream>
+#include <template/variadic_function.hpp>
 
 namespace Wander {
     class Test{
@@ -14,6 +15,8 @@ namespace Wander {
 
             //int i;
             //C<(i)> c;
+            tprintf("% world% %\n","Hello",'!',123);
+            wrapper(1,2.0,'a');
             AutoTemplate<'a'> template_a;
             OptionalName<int> kkk;
             int *p = new int(2);

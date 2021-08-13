@@ -29,6 +29,12 @@ public:
        point_[D]= data;
     }
 
+    template<std::size_t D>
+    void SetValue(const DataType& value)
+    {
+        std::fill_n(point_, Dimension, value);
+    }
+
 private:
     
    DataType point_[Dimension];
