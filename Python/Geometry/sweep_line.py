@@ -1,34 +1,58 @@
 import random
 import math
+import sys
 from PIL import Image, ImageDraw
 
 
-def CompareonY(interval,i,j):
-    if interval[i][1]>interval[j][1]: 
-        return True
-    elif interval[i][1] == interval[j][1]:
-        return interval[i][0] < interval[j][0]
-    return False 
+
+class PriorityQueue:
+    def __init__(self,intervals):
+        self.intervals = intervals 
+    def CompareonY(self,i,j):
+        if self.intervals[i][1]>self.intervals[j][1]: 
+            return True
+        elif self.intervals[i][1] == self.intervals[j][1]:
+            return self.intervals[i][0] < self.intervals[j][0]
+        return False 
+    # max heapify an array to store intervals as priority queue
+    def MaxHeapify(self,i):
+        left = i<<1
+        right = (i<<1) +1
+        largest = i
+        if left< len(self.intervals) and self.CompareonY(left,largest):
+            largest = left   
+        if right< len(self.intervals) and self.CompareonY(right,largest):
+            largest = right
+        if largest != i:
+            self.intervals[largest],self.intervals[i] = self.intervals[i],self.intervals[largest]
+            self.MaxHeapify(largest)
+    def BuildHeap(self):
+        for i in range(math.floor(len(self.intervals)/2),-1,-1):
+            self.MaxHeapify(i) 
+        return self.intervals
+    def PopMaxKey(self):
+        if len(self.intervals)<1:
+            raise ValueError("Can not pop a empty heap")
+        max = self.intervals[0]
+        # store value of last element and then remove it 
+        self.intervals[0] = self.intervals[-1]
+        self.intervals.pop()
+        self.MaxHeapify(0)
+        return max
+    def HeapIncreaseKey(self,i,interval):
+        if interval[1] < self.intervals[i][1]:
+            raise ValueError("Insert Error")
+        self.intervals[i] = interval 
+        while (i > 0 and self.intervals[i>>1][1] < interval[1]):
+            parent = i>>1
+            self.intervals[parent],self.intervals[i] = self.intervals[i],self.intervals[parent]
+            i = parent
+    def InsertNewInterval(self,interval):
+        self.intervals.append((~sys.maxsize,~sys.maxsize))
+        self.HeapIncreaseKey(len(self.intervals)-1,interval)
 
 
-# max heapify an array to store intervals as priority queue
-def MaxHeapify(intervals,i):
-    left = i<<1
-    right = (i<<1) +1
-    largest = i
-    if left< len(intervals) and CompareonY(intervals,left,largest):
-        largest = left   
-    if right< len(intervals) and CompareonY(intervals,right,largest):
-        largest = right
-    if largest != i:
-        intervals[largest],intervals[i] = intervals[i],intervals[largest]
-        MaxHeapify(intervals,largest)
-        
 
-def BuildHeap(intervals):
-    for i in range(math.floor(len(intervals)/2),0,-1):
-        MaxHeapify(intervals,i) 
-    return intervals
 
 
 
@@ -60,8 +84,9 @@ if __name__ == "__main__":
     for i in range(n):
         draw.line((startpoints[i],endpoints[i]),fill=(255,255,0))
     print(eventpoints)
-    heap_array= BuildHeap(eventpoints)
-    print(eventpoints)
+    priorityqueue =  PriorityQueue(eventpoints)
+    priorityqueue.BuildHeap()
+    print(priorityqueue.intervals)
     #draw.line(((30, 200), (130, 100), (80, 50)), fill=(255, 255, 0))
     #draw.line(((80, 200), (180, 100), (130, 50)), fill=(255, 255, 0), width=10)
     im.show()
