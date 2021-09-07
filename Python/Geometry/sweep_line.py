@@ -48,6 +48,7 @@ class PriorityQueue:
             self.intervals[parent],self.intervals[i] = self.intervals[i],self.intervals[parent]
             i = parent
     def InsertNewInterval(self,interval):
+        print("Intersection : {interval}")
         self.intervals.append((~sys.maxsize,~sys.maxsize))
         self.HeapIncreaseKey(len(self.intervals)-1,interval)
 
@@ -124,6 +125,29 @@ def FindNewEvent(segment1,segment2,eventpoint,priorityqueue,event_dict):
             aug_intsect_point.crossing_segments.add(segment2)
         event_dict[intsect_point] = aug_intsect_point
             #handle new eventpoint here
+
+def FindLeftRightMost(upper_crossing_segments):
+    left_most = None
+    right_most = None
+    for segment in upper_crossing_segments:
+        start_point = segment[0]
+        end_point = segment[1]
+        left_most_slope= sys.maxsize 
+        right_most_slope = ~sys.maxsize
+        if start_point[0] == end_point[0]:
+            slope = sys.maxsize
+        else:
+            slope = (start_point[1]-end_point[1])/(start_point[0]-end_point[0])
+        if slope <= left_most_slope and slope >=0:
+           slope = left_most_slope 
+           left_most = segment
+        elif slope <= 0 and slope > right_most_slope:
+            right_most_slope = slope
+            right_most = segment 
+    return left_most, right_most 
+            
+
+        
             
 
         
@@ -197,9 +221,16 @@ if __name__ == "__main__":
             print("got intersection {segments_set}")
         for segment in aug_eventpoint.lower_segments:
             segments.remove(segment)
-        if  len(set.union(aug_eventpoint.lower_segments,aug_eventpoint.upper_segments)) ==0:
+        upper_crossing_set = set.union(aug_eventpoint.lower_segments,aug_eventpoint.upper_segments)
+        if  len(upper_crossing_set) ==0:
             left_segment,right_segment = GetNeighborSegment(segments,aug_eventpoint.evenpoint)
             FindNewEvent(left_segment,right_segment,aug_eventpoint,priorityqueue,event_dict)
+        else:
+            left_most,right_most = FindLeftRightMost(upper_crossing_set)
+            left_neighbor,right_neighbor = GetNeighborSegment(segments,aug_eventpoint.evenpoint)
+            FindNewEvent(left_most,left_neighbor,aug_eventpoint,priorityqueue,event_dict)
+            FindNewEvent(right_most,right_neighbor,aug_eventpoint,priorityqueue,event_dict)
+            
 
 
         
